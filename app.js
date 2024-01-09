@@ -4,10 +4,13 @@ const app = express();
 const cors = require('cors');
 app.disable('x-powered-by');
 app.use(cors());
+app.use(express.json());
 const port = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+const postMiddleware = require('./util/postMiddleware');
+
+app.post('/meu-curriculo-facil', postMiddleware, (req, res) => {
+    res.send({ data: req.body});
 });
 
 app.get('/ping', (req, res) => {

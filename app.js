@@ -8,9 +8,15 @@ app.use(express.json());
 const port = process.env.PORT || 3000;
 
 const postMiddleware = require('./util/postMiddleware');
+const makingCurriculum = require('./util/makingCurriculum');
 
-app.post('/meu-curriculo-facil', postMiddleware, (req, res) => {
-    res.send({ data: req.body});
+app.post('/meu-curriculo-facil', postMiddleware, async (req, res) => {
+    const body = req.body;
+    const curriculo = body.curriculo;
+    const descricao_vaga = body.descricao_vaga;
+
+    const novo_curriculo = await makingCurriculum(curriculo, descricao_vaga);
+    res.send({ novo_curriculo });
 });
 
 app.get('/ping', (req, res) => {

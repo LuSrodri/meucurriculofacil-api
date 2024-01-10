@@ -15,8 +15,9 @@ app.post('/meu-curriculo-facil', postMiddleware, async (req, res) => {
     const curriculo = body.curriculo;
     const descricao_vaga = body.descricao_vaga;
 
-    const novo_curriculo = await makingCurriculum(curriculo, descricao_vaga);
-    res.send({ novo_curriculo });
+    const pathNewCurriculum = await makingCurriculum(curriculo, descricao_vaga);
+
+    res.sendFile(__dirname + pathNewCurriculum);
 });
 
 app.get('/ping', (req, res) => {
